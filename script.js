@@ -126,5 +126,5 @@ const game = (function() {
     }
   };
 
-  return { nextTurn, getTurnMarker, checkIfWon, showWinner, selectTile };
+  return { selectTile };
 })();
