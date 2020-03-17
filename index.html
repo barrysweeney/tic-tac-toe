@@ -12,17 +12,33 @@
 </head>
 
 <body>
-    <h1 id="turn" class="text-center"></h1>
-    <div class="container">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
+    <div class="container mx-auto">
+        <form id="playerForm">
+            <div class="form-group">
+                <label for="inputPlayer1">Player one:</label>
+                <input type="text" class="form-control" id="inputPlayer1" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="inputPlayer2">Player two:</label>
+                <input type="text" class="form-control" id="inputPlayer2" placeholder="Enter name">
+            </div>
+        </form>
+        <div id="heading">
+            <h1 id="turn"></h1>
+            <button id="start" class="btn btn-primary">Start</button>
+            <button id="reset" class="btn btn-primary">Reset</button>
+        </div>
+        <div id="gameboard">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

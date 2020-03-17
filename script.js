@@ -6,9 +6,6 @@ const Player = (name, marker) => {
   return { getName, getMarker };
 };
 
-const player1 = Player("Alice", "x");
-const player2 = Player("Bob", "o");
-
 // gameboard module using revealing module pattern
 const gameboard = (function() {
   "use strict";
@@ -16,16 +13,16 @@ const gameboard = (function() {
   const tilesCollection = document.getElementsByClassName("tile");
   const tiles = Array.from(tilesCollection);
 
-  (function makeSelectable() {
+  function makeSelectable() {
     // only selects tile if not already selected
     for (let i = 0; i < tiles.length; i++) {
       tiles[i].addEventListener("click", function() {
         game.selectTile(tiles[i]);
       });
     }
-  })();
+  }
 
-  return { tiles };
+  return { tiles, makeSelectable };
 })();
 
 // game module using revealing module pattern
@@ -33,8 +30,40 @@ const game = (function() {
   "use strict";
 
   let turnDisplay = document.getElementById("turn");
-  let turn = player1;
-  turnDisplay.innerHTML = `${turn.getName()}'s turn`;
+  let turn;
+  let player1;
+  let player2;
+  let playerForm = document.getElementById("playerForm");
+
+  // checks if values enterred in all form fields
+  function formComplete() {
+    return (
+      document.getElementById("inputPlayer1").value.length > 0 &&
+      document.getElementById("inputPlayer2").value.length > 0
+    );
+  }
+
+  function getFormValues() {
+    let name1 = document.getElementById("inputPlayer1").value;
+    let name2 = document.getElementById("inputPlayer2").value;
+    return { name1, name2 };
+  }
+
+  function startGame() {
+    if (formComplete()) {
+      let { name1, name2 } = getFormValues();
+      player1 = Player(name1, "x");
+      player2 = Player(name2, "o");
+      turn = player1;
+      turnDisplay.innerHTML = `${turn.getName()}'s turn`;
+      gameboard.makeSelectable();
+    }
+  }
+
+  let startButton = document.getElementById("start");
+  let resetButton = document.getElementById("reset");
+
+  startButton.addEventListener("click", startGame);
 
   const winCombos = [
     [0, 1, 2],
@@ -51,7 +80,19 @@ const game = (function() {
     for (let i = 0; i < gameboard.tiles.length; i++) {
       gameboard.tiles[i].innerHTML = "";
     }
+    playerForm.reset();
+    turnDisplay.innerHTML = "";
   };
+
+  let finishGame = () => {
+    for (let i = 0; i < gameboard.tiles.length; i++) {
+      if (gameboard.tiles[i].innerHTML === "") {
+        gameboard.tiles[i].innerHTML = " ";
+      }
+    }
+  };
+
+  resetButton.addEventListener("click", reset);
 
   let checkIfTie = () => {
     let tie = true;
@@ -65,13 +106,15 @@ const game = (function() {
 
   let selectTile = tile => {
     if (tile.innerHTML === "") {
-      tile.innerHTML = getTurnMarker();
+      let p = document.createElement("p");
+      p.innerHTML = getTurnMarker();
+      tile.appendChild(p);
       if (checkIfWon() === true) {
         showWinner();
-        reset();
+        finishGame();
       } else if (checkIfTie() === true) {
         showTie();
-        reset();
+        finishGame();
       } else {
         nextTurn();
       }
