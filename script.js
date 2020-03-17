@@ -100,8 +100,38 @@ const game = (function() {
     return tie;
   };
 
+  let availableIndexes = [];
+
+  let findAvailableIndexes = () => {
+    for (let i = 0; i < gameboard.tiles.length; i++) {
+      if (gameboard.tiles[i].innerHTML === "") {
+        availableIndexes.push(i);
+      }
+    }
+  };
+
+  let moves = [];
+  let minimax = () => {
+    findAvailableIndexes();
+    // after checking if the move results in a win then reset back to state before the move
+    // checks what happens when ai makes move to spot
+    // need to then check in a separate loop what happens when human makes move to spot
+    for (let i = 0; i < availableIndexes.length; i++) {
+      let p = document.createElement("p");
+      p.innerHTML = getTurnMarker();
+      gameboard.tiles[availableIndexes[i]].appendChild(p);
+      if (checkIfWon() === true) {
+        moves.push({ index: i, score: 10 });
+      } else if (checkIfTie() === true) {
+        moves.push({ index: i, score: 0 });
+      }
+      // resetting to intial state before check
+      gameboard.tiles[availableIndexes[i]].innerHTML = "";
+    }
+  };
+
   let generateRandomIndex = () => {
-    return Math.round(Math.random() * gameboard.tiles.length);
+    return Math.floor(Math.random() * gameboard.tiles.length);
   };
 
   let computerSelection = () => {
@@ -190,5 +220,5 @@ const game = (function() {
     }
   };
 
-  return { selectTile };
+  return { selectTile, minimax, moves, generateRandomIndex }; // only returing minimax and moves for logging
 })();
