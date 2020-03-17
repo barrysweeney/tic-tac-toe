@@ -37,23 +37,19 @@ const game = (function() {
 
   // checks if values enterred in all form fields
   function formComplete() {
-    return (
-      document.getElementById("inputPlayer1").value.length > 0 &&
-      document.getElementById("inputPlayer2").value.length > 0
-    );
+    return document.getElementById("inputPlayer1").value.length > 0;
   }
 
   function getFormValues() {
     let name1 = document.getElementById("inputPlayer1").value;
-    let name2 = document.getElementById("inputPlayer2").value;
-    return { name1, name2 };
+    return { name1 };
   }
 
   function startGame() {
     if (formComplete()) {
-      let { name1, name2 } = getFormValues();
+      let { name1 } = getFormValues();
       player1 = Player(name1, "x");
-      player2 = Player(name2, "o");
+      player2 = Player("Computer", "o");
       turn = player1;
       turnDisplay.innerHTML = `${turn.getName()}'s turn`;
       gameboard.makeSelectable();
@@ -104,6 +100,30 @@ const game = (function() {
     return tie;
   };
 
+  let generateRandomIndex = () => {
+    return Math.round(Math.random() * gameboard.tiles.length);
+  };
+
+  let computerSelection = () => {
+    let index = generateRandomIndex();
+    if (gameboard.tiles[index].innerHTML === "") {
+      let p = document.createElement("p");
+      p.innerHTML = getTurnMarker();
+      gameboard.tiles[index].appendChild(p);
+      if (checkIfWon() === true) {
+        showWinner();
+        finishGame();
+      } else if (checkIfTie() === true) {
+        showTie();
+        finishGame();
+      } else {
+        nextTurn();
+      }
+    } else {
+      computerSelection();
+    }
+  };
+
   let selectTile = tile => {
     if (tile.innerHTML === "") {
       let p = document.createElement("p");
@@ -117,6 +137,7 @@ const game = (function() {
         finishGame();
       } else {
         nextTurn();
+        computerSelection();
       }
     }
   };
