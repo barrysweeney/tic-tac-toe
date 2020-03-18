@@ -1,4 +1,4 @@
-#gameboard{
+#gameboard {
   display: grid;
   grid-template-columns: auto auto auto;
   justify-items: stretch;
@@ -7,12 +7,17 @@
   margin: 0 auto 1em auto;
 }
 
-#playerOneForm{
+#modeSelection {
+  width: 300px;
+  margin: auto;
+}
+
+#playerOneForm {
   margin-top: 1em;
 }
 
 #heading {
-  width: 400px;
+  width: 300px;
   margin: auto;
   margin-bottom: 0.5em;
 }
@@ -20,16 +25,43 @@
 .tile {
   width: 100px;
   height: 100px;
-  border: 1px solid;
   text-align: center;
   font-size: -webkit-xxx-large;
 }
 
-.container{
+#top-left,
+#top-middle {
+  border-right: solid;
+  border-bottom: solid;
+}
+
+#top-right {
+  border-bottom: solid;
+}
+
+#middle-left,
+#middle-middle {
+  border-right: solid;
+  border-bottom: solid;
+}
+
+#middle-right {
+  border-bottom: solid;
+}
+
+#bottom-left,
+#bottom-middle {
+  border-right: solid;
+}
+
+.container {
   margin-top: 1em;
 }
 
 /* hide to begin */
 #gameDisplay {
-  display: none; 
+  display: none;
+}
+i {
+  padding: 0.5em;
 }
