@@ -52,8 +52,10 @@ const game = (function() {
   // checks if values enterred in all form fields
   function formComplete() {
     if (playerTwoForm.style.display === "block") {
-      return document.getElementById("inputPlayer1").value.length > 0 &&
-        document.getElementById("inputPlayer2").value.length > 0;
+      return (
+        document.getElementById("inputPlayer1").value.length > 0 &&
+        document.getElementById("inputPlayer2").value.length > 0
+      );
     } else {
       return document.getElementById("inputPlayer1").value.length > 0;
     }
@@ -112,7 +114,6 @@ const game = (function() {
     for (let i = 0; i < gameboard.tiles.length; i++) {
       gameboard.tiles[i].innerHTML = "";
     }
-    playerForm.reset();
     turnDisplay.innerHTML = "";
   };
 
@@ -137,7 +138,7 @@ const game = (function() {
   };
 
   let generateRandomIndex = () => {
-    return Math.round(Math.random() * gameboard.tiles.length);
+    return Math.floor(Math.random() * gameboard.tiles.length);
   };
 
   let computerSelection = () => {
@@ -221,12 +222,14 @@ const game = (function() {
   const nextTurn = () => {
     if (turn === player1) {
       turn = player2;
-      turnDisplay.innerHTML = `${turn.getName()}'s turn`;
+      if (playerTwoForm.style.display === "block") {
+        turnDisplay.innerHTML = `${turn.getName()}'s turn`;
+      }
     } else {
       turn = player1;
       turnDisplay.innerHTML = `${turn.getName()}'s turn`;
     }
   };
 
-  return { selectTile };
+  return { selectTile, generateRandomIndex };
 })();
