@@ -34,22 +34,53 @@ const game = (function() {
   let player1;
   let player2;
   let playerForm = document.getElementById("playerForm");
+  let gameDisplay = document.getElementById("gameDisplay");
+  let playerTwoForm = document.getElementById("playerTwoForm");
+
+  function displaySinglePlayerMode() {
+    gameDisplay.style.display = "block";
+    playerTwoForm.style.display = "none";
+    twoPlayerModeButton.style.display = "none";
+  }
+
+  function displayTwoPlayerMode() {
+    gameDisplay.style.display = "block";
+    playerTwoForm.style.display = "block";
+    singlePlayerModeButton.style.display = "none";
+  }
 
   // checks if values enterred in all form fields
   function formComplete() {
-    return document.getElementById("inputPlayer1").value.length > 0;
+    if (playerTwoForm.style.display === "block") {
+      return document.getElementById("inputPlayer1").value.length > 0 &&
+        document.getElementById("inputPlayer2").value.length > 0;
+    } else {
+      return document.getElementById("inputPlayer1").value.length > 0;
+    }
   }
 
   function getFormValues() {
-    let name1 = document.getElementById("inputPlayer1").value;
-    return { name1 };
+    if (playerTwoForm.style.display === "block") {
+      let name1 = document.getElementById("inputPlayer1").value;
+      let name2 = document.getElementById("inputPlayer2").value;
+      return { name1, name2 };
+    } else {
+      let name1 = document.getElementById("inputPlayer1").value;
+      return { name1 };
+    }
   }
 
   function startGame() {
     if (formComplete()) {
-      let { name1 } = getFormValues();
-      player1 = Player(name1, "x");
-      player2 = Player("Computer", "o");
+      if (playerTwoForm.style.display === "block") {
+        let { name1, name2 } = getFormValues();
+        player1 = Player(name1, "x");
+        player2 = Player(name2, "o");
+      } else {
+        let { name1 } = getFormValues();
+        player1 = Player(name1, "x");
+        player2 = Player("computer", "o");
+      }
       turn = player1;
       turnDisplay.innerHTML = `${turn.getName()}'s turn`;
       gameboard.makeSelectable();
@@ -58,6 +89,11 @@ const game = (function() {
 
   let startButton = document.getElementById("start");
   let resetButton = document.getElementById("reset");
+  let singlePlayerModeButton = document.getElementById("singlePlay");
+  let twoPlayerModeButton = document.getElementById("twoPlay");
+
+  singlePlayerModeButton.addEventListener("click", displaySinglePlayerMode);
+  twoPlayerModeButton.addEventListener("click", displayTwoPlayerMode);
 
   startButton.addEventListener("click", startGame);
 
@@ -137,7 +173,9 @@ const game = (function() {
         finishGame();
       } else {
         nextTurn();
-        computerSelection();
+        if (playerTwoForm.style.display === "none") {
+          computerSelection();
+        }
       }
     }
   };

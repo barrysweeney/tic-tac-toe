@@ -13,27 +13,36 @@
 
 <body>
     <div class="container mx-auto">
-        <form id="playerForm">
-            <div class="form-group">
-                <label for="inputPlayer1">Player one:</label>
-                <input type="text" class="form-control" id="inputPlayer1" placeholder="Enter name">
+        <button id="singlePlay" class="btn btn-primary">Single Player</button>
+        <button id="twoPlay" class="btn btn-primary">Two Player</button>
+        <div id="gameDisplay">
+            <form id="playerForm">
+                <div class="form-group" id="playerOneForm">
+                    <label for="inputPlayer1">Player one:</label>
+                    <input type="text" class="form-control" id="inputPlayer1" placeholder="Enter name">
+                </div>
+                <div class="form-group" id="playerTwoForm">
+                    <label for="inputPlayer2">Player two:</label>
+                    <input type="text" class="form-control" id="inputPlayer2" placeholder="Enter name">
+                </div>
+            </form>
+
+            <div id="heading">
+                <h1 id="turn"></h1>
+                <button id="start" class="btn btn-primary">Start</button>
+                <button id="reset" class="btn btn-primary">Reset</button>
             </div>
-        </form>
-        <div id="heading">
-            <h1 id="turn"></h1>
-            <button id="start" class="btn btn-primary">Start</button>
-            <button id="reset" class="btn btn-primary">Reset</button>
-        </div>
-        <div id="gameboard">
-            <div class="tile"></div>
-            <div class="tile"></div>
-            <div class="tile"></div>
-            <div class="tile"></div>
-            <div class="tile"></div>
-            <div class="tile"></div>
-            <div class="tile"></div>
-            <div class="tile"></div>
-            <div class="tile"></div>
+            <div id="gameboard">
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
