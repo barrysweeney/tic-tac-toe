@@ -1,3 +1,18 @@
+i {
+  padding: 0.5em;
+}
+
+.tile {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  font-size: -webkit-xxx-large;
+}
+
+.container {
+  margin-top: 1em;
+}
+
 #gameboard {
   display: grid;
   grid-template-columns: auto auto auto;
@@ -5,6 +20,10 @@
   width: 300px;
   height: 300px;
   margin: 0 auto 1em auto;
+}
+
+#gameDisplay {
+  display: none; /* make hidden initially */
 }
 
 #modeSelection {
@@ -23,12 +42,7 @@
   margin-bottom: 0.5em;
 }
 
-.tile {
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  font-size: -webkit-xxx-large;
-}
+/* Tic-Tac-Toe Grid Borders */
 
 #top-left,
 #top-middle {
@@ -53,16 +67,4 @@
 #bottom-left,
 #bottom-middle {
   border-right: solid;
-}
-
-.container {
-  margin-top: 1em;
-}
-
-/* hide to begin */
-#gameDisplay {
-  display: none;
-}
-i {
-  padding: 0.5em;
 }
